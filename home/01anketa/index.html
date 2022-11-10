@@ -7,7 +7,76 @@
     <title>Anketa</title>
 </head>
 <body>
-<h2>Guten Tag!!</h2> 
-<p>this text is written for the check</p>
+    <script>
+    
+        var name = prompt('Enter your name and surname');
+        function isEmpty(obj){
+            for (let key in obj){
+                return false;
+            }
+            return true;
+        }
+    
+        // не смог убрать из алерта null вместо имени при нажатии отмена у промпта
+        if(isEmpty(name) || name === '' || typeof name == 'object'){
+            name = `not defined because you didn't write your name`;
+        }
+        else{
+            name = name;
+        }
+    
+        var age = prompt ('Enter your age');
+        var parsedAge = (parseInt(age));
+        var ageResult;
+        var infiveyears = (parsedAge + 5);
+        var ageInDays = age * 365;
+    
+            if(age >=101){
+                ageResult = `too much`;
+            }
+            else{
+                ageResult = age;
+            };
+    
+            
+            if(isEmpty(age) || parsedAge === '' || isNaN(parsedAge)){
+                age = `not defined`; 
+                ageResult = `not defined how much`; 
+                parsedAge = `not defined how much`; 
+                infiveyears = `not defined how much`; 
+                ageInDays = `not defined how much`;
+            }
+    
+    
+        var gender = confirm ('Are you a man?');
+        var genderResult;
+        var pension;
+            if (gender == true){
+                genderResult = `man`;
+                if(age <= 63){
+                    pension = `not on pension`
+                }
+                else{
+                    pension = `on pension`
+                }
+            }
+            else{
+                genderResult = `woman`;
+                if(age <= 58){
+                    pension = `not on pension`
+                }
+                else{
+                    pension = `on pension`
+                }
+            }
+    
+    // Я ставил \n для переноса строк, но когда переписал все переменные через ${} и без них переносило,а с ними дважды, так что я убрал их
+        alert(`Your name is ${name}
+    you are ${ageResult} years old
+    you are ${ageInDays} days old
+    in five years you'll be ${infiveyears} years old 
+    you are a ${genderResult}
+    you are ${pension}`);
+    </script>
 </body>
 </html>

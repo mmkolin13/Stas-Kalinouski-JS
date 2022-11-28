@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odd_int</title>
+</head>
+<body>
+
+<script>
+
+const arr = [2, 2, 4, 4, 4, 4, 3, 3, 3]
+
+function groupByNumber(array) {
+            let map = new Map();
+            for (let e of array) {
+                map.set(e, map.has(e) ? map.get(e) + 1 : 1);
+            }
+            return [...map];
+        }
+        function findOdd(a) {
+            let groups = groupByNumber(a);
+            return groups.find(e => e[1] % 2)[0];
+        }
+
+console.log(findOdd(arr));
+</script>
+    
+</body>
+</html>

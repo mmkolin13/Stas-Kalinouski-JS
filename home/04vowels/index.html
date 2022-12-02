@@ -5,8 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+<h2>считаем гласные в тексте</h2>
+<div id="wrapper">
+    <input type="text" name="string" id="string" placeholder="введите строку">
+    <button id="btn">Посчитать </button>
+</div>
+
+<div id="res_wrapper"> 
+    <span id="result"></span>
+</div>
+
+
+
+
+<script>
+
+const vowels = ["а", "о","и", "е", "ё", "э", "ы", "у", "ю", "я"];
+let count = 0;
+
+document.querySelector('#btn').addEventListener('click', ()=>{
+    let data = document.querySelector('#string').value;
+    const lowerData = data.toLowerCase();
+    const letters = lowerData.split('');
+
+    for(let symbol of letters){
+        if(vowels.includes(symbol)){
+            count += 1;
+        }
+    }
+    document.getElementById("result").innerHTML = `Количество гласных в вашем тексте -` + count;
+})
+
+
+
+</script>
+
 </body>
 </html>

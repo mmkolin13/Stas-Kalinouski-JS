@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+   <script>
+
+    function palindrome(string){
+        const letters = string.toLowerCase().trim().replace(/ё/g,"е");
+        const reversed = letters.split("").reverse().join("")
+        if(letters == reversed){
+            alert(`фраза ${string} является палиндромом`)
+        } else{
+            alert(`фраза ${string} не является палиндромом`)
+        }
+    };
+
+    palindrome('топот')
+
+
+    </script>
+</body>
+</html>

@@ -10,36 +10,39 @@
 <style>
     body{
         margin-left: 40px;
+        font-size: 25px;
     }
     h2{
         text-align: center;
     }
     p{
         display: inline-block;
-        font-size: 20px;
     }
     a{
-        font-size: 25px;
         display: flex;
         flex-direction: column; 
         width: 250px; 
-        margin-top: 5px;      
+        margin-top: 5px;     
+        text-decoration: none; 
     }
-    #checked{
+    #green{
         background-color: #1aae4a;
-        border-radius: 20px;
-        padding: 10px;
+        padding: 15px;
+    }
+    #yellow{
+        background-color: rgb(237, 237, 32);
+        padding: 15px;
     }
 </style>
     <h2>Homeworks</h2><br>
     <p>Зеленым будут подсвечены уже проверенные задания, желтым - которые проверены, но требуют доработки</p>
-
-    <a id="checked" href="home/01anketa/index.html">Anketa</a>
-    <a  href="home/01+spaces/index.html">Spaces deleting</a>
+<div id="wrapper">
+    <a id="green" href="home/01anketa/index.html">N03_ANKETA</a>
+    <a id="green" href="home/01+spaces/index.html">A2+_space-deleting</a>
     <a href="home/02calculator/index.html">Calculator</a>
-    <a href="home/03treesum/index.html">Arrays</a>
-    <a href="home/04vowels/index.html">Vowels</a>
-    <a href="home/04+palindrome/index.html">palindrome</a>
-
+    <a id="green" href="home/03treesum/index.html">N05_TREESUM</a>
+    <a id="green" href="home/04vowels/index.html">N07_VOWELS</a>
+    <a id="yellow" href="home/04+palindrome/index.html">A3+_Palindrome</a>
+</div>
 </body>
 </html>

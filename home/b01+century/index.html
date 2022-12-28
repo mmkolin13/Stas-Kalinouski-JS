@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Century counting</title>
+</head>
+<body>
+    
+
+    <script>
+
+        const year =parseInt(prompt(`введите год`));
+        function clearCount(year){
+            return Math.ceil(year / 100);
+        };
+
+        function countCentury(){
+            const res = clearCount(year)
+            return console.log(`Год ${year} относится к ${res} веку`);
+        };
+
+        if(!year){
+            alert(`введите корректные данные`);
+        } else{
+            countCentury();
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>

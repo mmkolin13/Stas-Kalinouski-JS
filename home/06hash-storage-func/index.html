@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES5</title>
+</head>
+<link rel="stylesheet" href="style.css">
+<body>
+    <div class="header">
+        <div class="search-wrapper">
+            <input type="text" name="search" id="search" placeholder="поиск коктейля">
+        </div>
+        <div class="creator-wrapper">
+            <input type="text" name="creator-name" id="creator-name" placeholder="введите название коктейля">
+            <form id="creator_alc-form">
+                <input type="radio" name="creator-alc" id="creator_alc-yes" value="yes">
+                <label for="creator_alc-yes">коктейль алкогольный</label>
+                <input type="radio" name="creator-alc" id="creator_alc-no" value="no">
+                <label for="creator_alc-no">коктейль безалкогольный</label>
+            </form>
+            <div class="recipy-wrapper">
+                <label id="recipy-label" for="recipy">Введите репепт приготовления</label>
+                <textarea name="recipy" id="recipy" cols="6" rows="10"></textarea>
+            </div>
+            <button id="creator-submit" onclick="collectValue()"> сохранить </button>
+        </div>
+    </div>
+
+    
+<script>
+
+function HashStorageFunc(name, product, value){
+    this.name = name;
+    this.product = product;
+    this.value = value;
+
+    HashStorageFunc.protopype.addValue = function(key, value){
+        
+    };
+    HashStorageFunc.protopype.getValue = function(key){
+
+    };
+    HashStorageFunc.protopype.deleteValue = function(key){
+
+    };
+    HashStorageFunc.protopype.getKeys = function(){
+
+    };
+};
+
+let margarita = new HashStorageFunc('margarita', ['vodka', 'juice', 'ice'], 10);
+let drinkStorage = [];
+
+function collectValue(){
+    const name = document.querySelector('#creator-name').value;
+    
+    const recipy = document.querySelector('#recipy').value;
+    console.log(name, recipy)
+}
+
+
+</script>
+
+</body>
+</html>

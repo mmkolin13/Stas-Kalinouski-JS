@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="search-wrapper">
+        <input type="text" name="search" id="search" placeholder="поиск коктейля">
+        <button id="search-btn" onclick="searchValue()">искать</button>
+    </div>
+<div id="main-wrapper">
+    <div id="header">
+
+        <div id="creator-wrapper">
+            <h2>Создайте свой коктейль</h2>
+            <input type="text" name="creator-name" id="creator-name" placeholder="введите название коктейля">
+            <form id="creator_alc-form">
+                <input type="radio" name="creator-alc" checked id="creator_alc-yes" value="да">
+                <label for="creator_alc-yes">коктейль алкогольный</label>
+                <input type="radio" name="creator-alc" id="creator_alc-no" value="нет">
+                <label for="creator_alc-no">коктейль безалкогольный</label>
+            </form>
+            <div class="recipy-wrapper">
+                <label id="recipy-label" for="recipy">Введите репепт приготовления</label>
+                <textarea name="recipy" id="recipy" cols="6" rows="10"></textarea>
+            </div>
+            <button id="creator_submit-btn" onclick="collectValue()"> сохранить </button>
+            
+        </div>
+        <div id="buttons-wrapper">
+            <button id="allNames-btn" onclick="getAllNames()">все коктейли</button>
+            
+        </div>
+    </div>
+
+    <div id="inner">
+        <h2>Тут вы увидите всю информацию о коктейлях</h2>
+        <div id="inner-wrap"></div>
+    </div>
+</div>
+    
+
+<script>
+
+    class HashStorage {
+        constructor(){
+            this.store_ = {};
+        };
+
+        addValue(key, value){
+            this.store_[key] = value;
+        };
+        getValue(key){
+            return this.store_[key];
+        };
+        deleteValue(key){
+            if(!(key in this.store)){
+                return false;
+            }
+            return delete this.store_[key];
+        };
+        getKeys(){
+            return Object.keys(this.store_);
+        };
+    };
+
+    const cocktailStorage = new HashStorage();
+    let div = document.createElement('div');
+    div.id = 'app';
+
+    // добавляем новый коктейль
+    function collectValue(){
+        let cocktail = {};
+        let name = document.querySelector('#creator-name').value;
+        let recipy = document.querySelector('#recipy').value;
+
+        let radio = document.querySelectorAll('input[name="creator-alc"]');
+        for(let option of radio){
+            if(option.checked){
+                radio = option.value;
+            }
+        };
+
+        cocktailStorage.addValue(name, {name, radio, recipy});
+        console.log(`коктейль был добавлен`, cocktailStorage.getValue(name));
+
+    };
+    function generate(cocktailName,cocktailRadio, cocktailRecipy ){
+        return `
+            <h3> коктейль ${cocktailName} </h3>
+            <p><b>Алкогольный:</b> ${cocktailRadio}</p>
+            <p><b>рецепт:</b> ${cocktailRecipy} </p>
+            <hr>
+        `
+    }
+    // ищем, есть ли коктейль в базе
+    let temp = '';
+    function searchValue(){
+        let data = document.querySelector('#search').value;
+        if(!(cocktailStorage.getValue(data))){
+            return alert(`коктейля ${data} нет!`)
+        } else{
+            temp += generate(cocktailStorage.store_[data].name,cocktailStorage.store_[data].radio, cocktailStorage.store_[data].recipy);
+            div.innerHTML = temp;
+            document.getElementById('inner-wrap').append(div);
+        };
+    };
+    // выводим существующие названия коктейлей
+
+    function cocktailsList(itemName){
+        return `
+            <h2>список добавленных коктейлей</h2>
+            <h4>${itemName}</h4>
+        `
+    }
+
+    function getAllNames(){
+        let temp1 = '';
+        temp1 = cocktailStorage.getKeys();
+        if(Object.keys(cocktailStorage.store_).length < 1){
+            alert('Добавленных коктейлей еще нет!')
+        } else{
+            div.innerHTML = cocktailsList(temp1);
+            document.getElementById('inner-wrap').append(div);
+        }
+
+        
+    }
+
+</script>
+
+</body>
+</html>

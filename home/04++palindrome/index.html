@@ -8,25 +8,40 @@
 </head>
 <body>
 
-    
+    <script>
 
-<script>
 
-    function palindrome(word){
-        const letters = word.toLowerCase().trim().replace(/ё/g,"е");
-        const length = letters.length;
-        for(let i = 0; i < letters.length; i++){
-            
+    function preparePalindrome(str){
+        if(!str){
+            alert(`введите корректные данные`);
+        } else{
+        const letters = str.toLowerCase().trim().split(' ').join('').replace(/ё/g,"е");
+        return letters;
         }
-    }
+    };
+
+    function checkPalindrome(str){
+                const letters = preparePalindrome(str);
+
+                if(letters.length === 1){
+                    return true;
+                }   
+                if(letters.length === 2) {
+                    return letters[0] === letters[1];
+                }
+                if(letters[0] === letters.slice(-1)) {
+                    return checkPalindrome(letters.slice(1,-1))
+                }
+                return false;
+    };
+
+    const str1 = prompt(`введите слово или фразу`);
+    const res = checkPalindrome(str1);
+
+    console.log(res);
 
 
-
-    palindrome('топот')
-
-
-</script>
-
+    </script>
 
 </body>
 </html>

@@ -11,7 +11,7 @@
    <script>
 
     function palindrome(string){
-        const letters = string.toLowerCase().trim().replace(/ё/g,"е");
+        const letters = string.toLowerCase().trim().split(' ').join('').replace(/ё/g,"е");
         const reversed = letters.split("").reverse().join("")
         if(letters == reversed){
             alert(`фраза ${string} является палиндромом`)
@@ -20,7 +20,7 @@
         }
     };
 
-    palindrome('топот')
+    palindrome('а роза азора')
 
 
     </script>

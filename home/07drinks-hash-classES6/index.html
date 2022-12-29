@@ -9,7 +9,8 @@
 </head>
 <body>
     <div id="search-wrapper">
-        <input type="text" name="search" id="search" placeholder="поиск коктейля">
+        <button id="search-btn" onclick="deleteItem()">удалить</button>
+        <input type="text" name="search" id="search" placeholder="поиск либо удаление коктейля">
         <button id="search-btn" onclick="searchValue()">искать</button>
     </div>
 <div id="main-wrapper">
@@ -57,14 +58,14 @@
         getValue(key){
             return this.store_[key];
         };
+        getKeys(){
+            return Object.keys(this.store_);
+        };
         deleteValue(key){
-            if(!(key in this.store)){
+            if(!(key in this.store_)){
                 return false;
             }
             return delete this.store_[key];
-        };
-        getKeys(){
-            return Object.keys(this.store_);
         };
     };
 
@@ -87,6 +88,8 @@
 
         cocktailStorage.addValue(name, {name, radio, recipy});
         console.log(`коктейль был добавлен`, cocktailStorage.getValue(name));
+        document.getElementById('creator-name').value = "";
+        document.getElementById('recipy').value = "";
 
     };
     function generate(cocktailName,cocktailRadio, cocktailRecipy ){
@@ -96,7 +99,8 @@
             <p><b>рецепт:</b> ${cocktailRecipy} </p>
             <hr>
         `
-    }
+    };
+
     // ищем, есть ли коктейль в базе
     let temp = '';
     function searchValue(){
@@ -108,15 +112,16 @@
             div.innerHTML = temp;
             document.getElementById('inner-wrap').append(div);
         };
+        document.getElementById('search').value = "";
     };
-    // выводим существующие названия коктейлей
 
+    // выводим существующие названия коктейлей
     function cocktailsList(itemName){
         return `
             <h2>список добавленных коктейлей</h2>
             <h4>${itemName}</h4>
         `
-    }
+    };
 
     function getAllNames(){
         let temp1 = '';
@@ -127,9 +132,16 @@
             div.innerHTML = cocktailsList(temp1);
             document.getElementById('inner-wrap').append(div);
         }
+    };
 
-        
+    // удаляем коктейль
+    function deleteItem(){
+        let data2 = document.querySelector('#search').value;
+        const deleteIt = cocktailStorage.deleteValue(data2);
+        deleteIt === true ? alert(`коктейль ${data2} удален!`) : console.log(`коктейля ${data2} и так нет!`)
+
     }
+
 
 </script>
 

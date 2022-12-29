@@ -27,11 +27,10 @@
     width: 500px;
     border-radius: 5px;
     border: 1px solid #999;
-    border-radius: 5px;
     box-shadow: 1px 1px 1px #999;
     margin-bottom: 50px;
     flex-direction: row;
-    margin-right: 10px;
+    margin: 40px 10px;
 }
 #search-btn, #creator_submit-btn{
     width: 95px;

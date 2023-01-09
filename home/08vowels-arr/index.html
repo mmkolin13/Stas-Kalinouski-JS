@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vowels count</title>
+</head>
+<body>
+
+    <script>
+
+        const text = prompt(`введите текст`);
+        const vowels = ["а", "о", "и", "е", "ё", "э", "ы", "у", "ю", "я"];
+
+
+        // способ с forEach
+        function countForEach (str) {
+            let count = 0;
+            str.split('').forEach((el) => vowels.includes(el) ? count++ : 1);
+            return `количество гласных букв - ${count}`;
+        };
+
+        // способ с filter
+        function countFilter (str) {
+            const newArr = str.split('').filter((el) => vowels.includes(el))
+            return `количество гласных букв - ${newArr.length}`;
+        };
+
+        // способ с reduce
+        function countReduce (str) {
+            let res = str.split('').reduce((acc, curr) => {
+                if (vowels.includes(curr)) {
+                    acc++;
+                }
+                return acc
+            }, 0)
+            return `количество гласных букв - ${res}`;
+        };
+
+        let a = countForEach(text);
+        let b = countFilter(text);
+        let c = countReduce(text);
+        console.log(a, b, c);
+
+
+    </script>
+    
+</body>
+</html>

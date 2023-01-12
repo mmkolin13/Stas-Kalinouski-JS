@@ -7,8 +7,31 @@
     <title>dyn-form</title>
 </head>
 <body>
+    <style>
+        #wrap {
+            width: 30%;
+            display: flex;
+            margin: 0 auto;
+            flex-direction: column;
+            gap: 10px;
+            border: 2px solid gray;
+        }
+
+        #checkboxWrap label, #radioWrap label {
+            margin-right: 10px;
+        }
+
+        textarea {
+            height: 80px; 
+        }
+
+    </style>
+
+    <form action="https://fe.it-academy.by/TestForm.php" id="wrap"></form>
+
 
     <script>
+        // формы
         const formDef1 =
             [
                 {label:'Название сайта:',kind:'longtext',name:'sitename'},
@@ -32,6 +55,114 @@
                 {label:'Возраст:',kind:'number',name:'age'},
                 {caption:'Зарегистрироваться',kind:'submit'},
             ];
+
+        // цикл 
+        function buildInput (el) {
+
+            const wrap = document.querySelector('#wrap');
+
+            if (el.kind === 'combo') {
+                const checkboxWrap = document.createElement('div');
+                checkboxWrap.setAttribute('id', 'checkboxWrap');
+
+                el.variants.forEach ((item) => {
+                    const checkbox = document.createElement('input');
+                    checkbox.setAttribute('type', 'checkbox');
+                    checkbox.setAttribute('value', item.value);
+
+                    const label = document.createElement('label');
+                    checkbox.setAttribute('id', item.text);
+                    label.setAttribute('for', item.text);
+                    const labelText = document.createTextNode(item.text);
+                   
+                    label.appendChild(labelText);
+                    checkboxWrap.appendChild(checkbox);
+                    checkboxWrap.appendChild(label);
+                    wrap.appendChild(checkboxWrap)
+                })
+            };
+
+            if (el.kind === 'radio') {
+                const radioWrap = document.createElement('div');
+                radioWrap.setAttribute('id', 'radioWrap');
+
+                el.variants.forEach ((item) => {
+                    const radio = document.createElement('input');
+                    radio.setAttribute('type', 'radio');
+
+                    const label = document.createElement('label');
+                    radio.setAttribute('id', item.text);
+                    label.setAttribute('for', item.text);
+                    const labelText = document.createTextNode(item.text);
+
+                    label.appendChild(labelText);
+                    radioWrap.appendChild(radio);
+                    radioWrap.appendChild(label);
+                    wrap.appendChild(radioWrap);
+                })
+            };
+
+            const input = document.createElement('input');
+            input.name = el.name;
+            input.setAttribute('label', el.label);
+            
+            switch (el.kind) {
+                case 'longtext': 
+                    input.setAttribute('type', 'text');
+                    input.setAttribute('placeholder', el.label);
+                    wrap.appendChild(input);
+                    break;
+                case 'number': 
+                    input.setAttribute('type', 'number');
+                    input.setAttribute('placeholder', el.label);
+                    wrap.appendChild(input);
+                    break;
+                case 'shorttext':
+                    input.setAttribute('type', 'email');
+                    input.setAttribute('placeholder', el.label);
+                    wrap.appendChild(input);
+                    break;
+                case 'check': 
+                    input.setAttribute('type', 'checkbox');
+                    input.setAttribute('id', 'single-check');
+                    input.setAttribute('required', true);
+                    input.setAttribute('name', el.name);
+
+                    const checkWrap = document.createElement('div');
+                    checkWrap.setAttribute('id', 'checkWrap');
+
+                    const checkLabel = document.createElement('label');
+                    checkLabel.setAttribute('for', el.name);
+                    checkLabelText = document.createTextNode(el.label);
+                    checkLabel.appendChild(checkLabelText);
+                    checkWrap.appendChild(checkLabel);
+                    checkWrap.appendChild(input);
+                    wrap.appendChild(checkWrap);
+                    break;
+                case 'memo':
+                    const textarea = document.createElement('textarea');
+                    textarea.setAttribute('name', el.name);
+                    textarea.setAttribute('placeholder', el.label)
+                    wrap.appendChild(textarea);
+                    break;
+                case 'submit':
+                    input.setAttribute('type', 'button');
+                    input.setAttribute('value', el.caption);
+                    wrap.appendChild(input);
+                    break;
+            }
+
+        };
+
+// запуск функций в цикле
+        
+        for (let element of formDef1) {
+            buildInput(element)
+        }
+        
+        for (let element of formDef2) {
+            buildInput(element);
+        }
 
     </script>
 </body>

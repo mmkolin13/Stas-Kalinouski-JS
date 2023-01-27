@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Form</title>
+</head>
+<body>
+    <form  method="post" name="websiteForm" class="form" action="https://fe.it-academy.by/TestForm.php">
+        <div class="developers">
+            <label for="developers">Разработчики:</label>
+            <input type="text" name="developers">
+        </div>
+        <div class="siteName">
+            <label for="siteName">Название сайта:</label>
+            <input type="text" name="siteName">
+        </div>
+        <div class="url">
+            <label for="url">URL сайта:</label>
+            <input type="text" name="url">
+        </div>
+        <div class="launchDate">
+            <label for="launchDate">Lата запуска сайта:</label>
+            <input type="date" name="launchDate">
+        </div>
+        <div class="guests">
+            <label for="guests">Посетителей в сутки:</label>
+            <input type="number" name="guests">
+        </div>
+        <div class="email">
+            <label for="email">E-mail для связи:</label>
+            <input type="email" name="email">
+        </div>
+        <div class="section">
+            <label for="section">Рубрика каталога:</label>
+            <select name="section">
+                <option value="1">Здоровье</option>
+                <option value="2">Домашний уют</option>
+                <option value="3">Бытовая техника</option>
+            </select>
+        </div>
+        <div class="moneyMode">
+            <label for="moneyMode">Размещение:</label>
+
+            <label for="free">Бесплатное</label>
+            <input type="radio" name="radio" value="free">
+
+            <label for="paid">Платное</label>
+            <input type="radio" name="radio" value="paid" checked>
+
+            <label for="vip">VIP</label>
+            <input type="radio" name="radio" value="vip">
+        </div>
+        <div class="reviews">
+            <label for="reviews">Разрешить отзывы:</label>
+            <input type="checkbox" name="reviews">
+        </div>
+        <div class="description">
+            <label for="description">Описание сайта:</label> <br>
+            <textarea name="description" cols="40" rows="8"></textarea>
+        </div>
+        <div class="button">
+            <input type="submit" value="Отправить">
+        </div>
+    </form>
+
+    <script>
+        
+        const form = document.querySelector('.form');
+
+        const texts = document.querySelectorAll('input[type="text"], input[type="email"]');
+        const date = form.elements.launchDate;
+        const guests = form.elements.guests;
+        const select = form.elements.section;
+        const radios = document.querySelectorAll('input[type="radio"]')
+        const reviews = form.elements.reviews;
+        const desc = form.elements.description;
+
+        // создание ошибки
+        const addError = (input, warning) => {
+            input.style.borderColor = '#AA1600';
+            const parent = input.parentElement;
+            const error = parent.querySelector('.error');
+            if (error) {
+                return null
+            };
+
+            const span = document.createElement('span');
+            span.className = 'error';
+            span.style.color = '#AA1600';
+            span.textContent = warning;
+
+            parent.appendChild(span);
+        };
+
+        // удаление ошибки
+        const deleteError = (input) => {
+            input.style.borderColor = '';
+            const parent = input.parentElement;
+            const error = parent.querySelector('.error');
+            if (error) {
+                error.remove()
+            }
+        };
+        // --------------------
+
+
+        // проверка на пустое поле
+        const validEmpty = (input) => {
+            if (input.value == '') {
+                addError(input, 'поле не должно быть пустым')
+                return false
+            };
+            deleteError (input);
+            return true;
+        };
+
+        texts.forEach((text) => {
+            text.addEventListener('blur', () =>  validEmpty(text));
+        });
+
+        // проверка на дату
+        const validDate = () => { 
+            if (date.value === '') {
+                addError (date, 'выберите дату запуска сайта!')
+                return false; 
+            }        
+            if (new Date() < new Date(date.value)) {
+                addError (date, 'вы не могли создать сайт в будущем!')
+                return false;
+            } else {
+                deleteError(date)
+                return true;
+            };
+        };
+
+        date.addEventListener('change', () => validDate());
+
+        // проверка числа посетителей
+        const validGuests = () => {
+            if (guests.value < 100) {
+                addError(guests, 'у вашего сайта слишком мало посетителей!')
+                return false;
+            } 
+            deleteError(guests)
+            return true;
+        };
+
+        guests.addEventListener('blur', () => validGuests());
+
+        //проверка на рубрику каталога
+        const validSection = () => {
+            if (select.value == 1) {
+                addError(select, 'места в данном разделе закончились!')
+            } else {
+                deleteError(select)
+            }
+        };
+
+        select.addEventListener('change', () => validSection())
+
+        // проверка на размещение
+        
+        const validRadio = (input) => {
+            if (radios[2].checked) {
+                addError(input, 'vip размещение временно недоступно')
+                return false;
+            } else {
+                deleteError(input)
+                return true
+            };
+        };
+
+        radios.forEach(radio => {
+            radio.addEventListener('change', () => validRadio(radio))
+        });
+
+        // проверка на отзывы
+        const validReviews = () => {
+            if (!reviews.checked) {
+                addError(reviews, 'пожалуйста, разрешите оставлять отзывы!')
+            } else {
+                deleteError(reviews)
+            };
+        };
+
+        reviews.addEventListener('change', () => validReviews())
+
+        // проверка на описание
+        const validDesc = () => {
+            if (desc.value.length < 5 || desc.value.length > 100) {
+                addError(desc, 'неподходящая длина отзыва')
+                return false;
+            } else {
+                deleteError(desc);
+                return true
+            };
+        };
+
+        desc.addEventListener('blur', () => validDesc());
+
+        // submit
+ 
+        document.addEventListener('submit', (e) => {
+
+            for (let text of texts) {
+                validEmpty(text);
+            };
+            validDate();
+            validGuests();
+            validSection();
+            // validRadio(radio);      почему-то при проверке на радио здесь не срабатывает e.preventDefault()
+            validReviews();
+            validDesc();
+
+            let errors = document.querySelectorAll('.error');
+            if (errors.length > 0) {
+                e.preventDefault()
+                console.log('для отправки формы устраните все ошибки!')
+            };
+
+        });     
+
+    </script>
+</body>
+</html>

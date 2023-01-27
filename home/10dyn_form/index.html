@@ -27,7 +27,7 @@
 
     </style>
 
-    <form action="https://fe.it-academy.by/TestForm.php" id="wrap"></form>
+    <form action="https://fe.it-academy.by/TestForm.php" method="post" id="wrap"></form>
 
 
     <script>
@@ -146,7 +146,7 @@
                     wrap.appendChild(textarea);
                     break;
                 case 'submit':
-                    input.setAttribute('type', 'button');
+                    input.setAttribute('type', 'submit');
                     input.setAttribute('value', el.caption);
                     wrap.appendChild(input);
                     break;

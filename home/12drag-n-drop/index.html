@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag-n-Drop</title>
+</head>
+<style>
+    .red, .blue {
+        height: 290px;
+        width: 290px;
+    }
+    .red{
+        border: 2px solid red;
+    }
+    .blue{
+        border: 2px solid blue;
+    }
+    .boxwrap{
+        display: flex;
+        flex-direction: row;
+    }
+</style>
+<body>
+    <div id="wrap">
+        <img src="in_yan.png" alt="in_yan">
+        <img src="people.png" alt="people">
+        <img src="sax.png" alt="saxophone">
+        <img src="sigarette.png" alt="sigarette">
+    </div>
+<script>
+    const images = document.querySelectorAll('img');
+
+    images.forEach((el) => {
+        // функция перетаскивания
+        el.onmousedown = (event) => {
+            let shiftX = event.clientX - el.getBoundingClientRect().left;
+            let shiftY = event.clientY - el.getBoundingClientRect().top;
+
+            el.style.position = 'absolute';
+            el.style.zIndex = 10000;
+            document.body.append(el);
+
+            // двигаем объект
+            function moveAt(pageX, pageY) {
+                el.style.left = pageX - shiftX + 'px';
+                el.style.top = pageY - shiftY + 'px';
+            };
+            moveAt(event.pageX, event.pageY);
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            };
+            document.addEventListener('mousemove', onMouseMove);
+            el.onmouseup = () => {
+                document.removeEventListener('mousemove', onMouseMove);
+                el.onmouseup = null;
+            };
+        };
+        // отмена браузерного drag'n drop
+        el.ondragstart = () => {
+            return false;
+        };
+
+    });
+</script>
+</body>
+</html>

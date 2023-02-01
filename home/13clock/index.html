@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+</head>
+<body>
+<div class="input-wrap">
+    <input type="range" name="input-width" id="input-width" min="200" max="800" step="1" value="400">
+    <label for="input-width">Укажите ширину часов</label>
+    <button id="create-btn">создать часы</button>
+</div>
+<div class="canvas-wrap">
+    <canvas id="canvas"></canvas>
+</div>
+<script>
+// переменные
+    let inputWidth = document.querySelector('#input-width');
+    const btn = document.querySelector('#create-btn');
+    const canvas = document.querySelector('#canvas');
+    const ctx = canvas.getContext('2d');
+    let isActive = false;
+    let radius;
+    const inputDiv = document.querySelector('.input-wrap');
+
+// прячем input
+const hideElem = (elem) => {
+        elem.style.visibility = 'hidden';
+    };
+
+// функции построения часов
+    // скелет часов
+    const clockBody = () => {
+        radius = inputWidth.value / 2;
+        canvas.width = inputWidth.value;
+        canvas.height = inputWidth.value;
+        ctx.translate(radius, radius);
+        
+        ctx.arc(0, 0, radius * 0.99, 0, 2 * Math.PI);
+        ctx.fillStyle = "#FFB767";
+        ctx.fill();
+        ctx.stroke();
+    };
+
+    // циферблат
+    const clockNums = (ctx, radius) => {
+        let angle;
+        ctx.font = radius * 0.2 + "px arial";
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+
+        for (let num = 1; num < 13; num++) {
+            angle = num * (Math.PI / 6);
+            ctx.rotate(angle);
+            ctx.translate(0, -radius * 0.8);
+            ctx.rotate(-angle);
+            // кружки вокруг цифр
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.14, 0, 2 * Math.PI);
+            ctx.fillStyle = "#54AB6A";
+            ctx.fill();
+            ctx.stroke();
+            // цифры
+            ctx.fillStyle = "black";
+            ctx.fillText((num).toString(), 0, 0);
+
+            ctx.rotate(angle);
+            ctx.translate(0, radius * 0.8);
+            ctx.rotate(-angle);
+        };
+    };
+
+    // стрелки
+    const clockTime = (ctx, radius) => {
+        let date = new Date();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        //цифровое время в консоль
+        const analogTime = (ctx) => {
+            if (second > 9) {
+                ctx.fillText(hour + ':' + minute + ':' + second, 0, (-radius * 0.4));
+            } else {
+                ctx.fillText(hour + ':' + minute + ':0' + second, 0, (-radius * 0.4));
+            }
+            ctx.font = '20px arial';
+            ctx.stroke();
+        };
+        analogTime(ctx);
+        
+        // отрисовка стрелок
+        const drawArrow = (ctx, pos, length, width) => {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(0, 0);
+            ctx.rotate(pos);
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        };
+
+        hour = hour % 12;
+        hour = (hour * Math.PI / 6) + (minute * Math.PI / (6 * 60)) + (second * Math.PI / (360 * 60));
+        drawArrow(ctx, hour, radius * 0.4, radius * 0.085);
+
+        minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+        drawArrow(ctx, minute, radius * 0.7, radius * 0.07);
+
+        second = (second * Math.PI / 30);
+        drawArrow(ctx, second, radius * 0.8, radius * 0.02);
+    };
+
+
+    // общая отрисовка часов
+    const buildClock = () => {
+        clockBody();
+        clockNums(ctx, radius);
+        clockTime(ctx, radius);
+    };
+    btn.addEventListener('click', () => {
+        isActive = true;
+        if (isActive) {
+            hideElem(inputDiv)
+            setInterval(buildClock, 1000)
+        };
+    });
+
+console.log('кружки вокруг цифр кривоваты, но сделать их ровнее не смог ')
+</script>
+</body>
+</html>

@@ -43,6 +43,7 @@
 
             el.style.position = 'absolute';
             el.style.zIndex = 10000;
+            el.style.cursor = 'grab';
             document.body.append(el);
 
             // двигаем объект
@@ -58,6 +59,7 @@
             el.onmouseup = () => {
                 document.removeEventListener('mousemove', onMouseMove);
                 el.onmouseup = null;
+                el.style.cursor = 'default';
             };
         };
         // отмена браузерного drag'n drop

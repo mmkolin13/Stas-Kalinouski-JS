@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="field-menu">
+        <button id="start-ball-btn"> Запуск мяча </button>
+        <p> Счет </p><span id="score"> 0 </span>
+    </div>
+    <div id="wrap">
+        <button id="start-btn">Запуск</button> 
+        <br>
+        <p> w,s - левая ракетка, k,m - правая</p>
+    </div>
+    <div id="app"></div>
+
+<!-- <script src="script.js"></script> -->
+<script>
+    const fieldMenu = document.querySelector('#field-menu')
+    const wrap = document.querySelector('#wrap');
+    const btn = document.querySelector('#start-btn');
+    const app = document.querySelector('#app');
+
+// поле
+    const fieldWrap = document.createElement('div');
+    fieldWrap.id = 'fieldWrap';
+    const field = document.createElement('div');
+    field.id = 'field';
+
+    const stickL = document.createElement('div');
+    const stickR = document.createElement('div');
+
+    const ballBtn = document.querySelector('#start-ball-btn');
+
+    const createField = () => {
+        
+        stickL.id = 'stickL';
+        stickR.id = 'stickR';
+        
+        field.appendChild(stickL);
+        field.appendChild(stickR);
+        fieldWrap.appendChild(field);
+        app.appendChild(fieldWrap);
+
+    };
+
+    const moveStick = (e) => {
+        let leftStick = stickL.offsetTop;
+        let rightStick = stickR.offsetTop;
+
+        switch (e.keyCode) {
+            case 87:
+                if (leftStick > 0 && leftStick <= 222) {
+                    stickL.style.top = leftStick - 3 + 'px';
+                    console.log(leftStick + 'up')
+                }
+                break;
+            case 83:
+                if (leftStick >= 0 && leftStick <= 221) {
+                    stickL.style.top = leftStick + 3 + 'px';
+                    console.log(leftStick + 'down')
+                }
+                break;
+            case 75: 
+                if (rightStick > 0 && rightStick <= 222) {
+                    stickR.style.top = rightStick - 3 + 'px';
+                    break;
+                }
+            case 77: 
+                if (rightStick >= 0 && rightStick <= 221) {
+                    stickR.style.top = rightStick + 3 + 'px';
+                    break;
+                }
+        };
+    };
+
+// мяч
+    const launchBall = () => {
+
+        let ball = document.createElement('div');
+        ball.id = 'ball';
+        field.appendChild(ball);
+
+        let ballX = ball.offsetWidth;
+        let ballY = ball.offsetHeight;
+        const ballWidth = 20  // половина от длины/ширины шара
+        let xAdded = 1;
+        let yAdded = 1;
+
+
+        const move = () => {
+            ballX += xAdded;
+            ballY -= yAdded;
+
+            if ( ballY  == field.clientHeight - ballWidth || ballY == 50) {
+                console.log('yyyyyyyyy');
+                yAdded = -yAdded;
+            }
+            if ( ballX  == field.clientWidth - ballWidth || ballX == -10) {
+                console.log('dscji');
+                xAdded = -xAdded;
+            }
+
+            ball.style.transform = `translate(${ballX}px, ${ballY}px)`;
+            console.log(ballY)
+        }
+        setInterval(move, 10);
+ 
+    };
+
+
+
+
+// обработчики
+    btn.addEventListener('click',function () {
+        wrap.style.display = 'none';
+        fieldMenu.style.visibility = 'visible';
+        createField();
+        launchBall();
+    });
+    window.onkeydown = (e) => {
+        moveStick(e)
+    };
+</script>
+</body>
+</html>

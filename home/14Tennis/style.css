@@ -1,0 +1,99 @@
+body {
+    background-color: #FFF6E5;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40vh auto;
+}
+#start-btn {
+    height: 100px;
+    width: 300px;
+    background-color: #607BE7;
+    border: none;
+    border-radius: 10px;
+    font-size: 35px;
+    color: #FFF6E5;
+}
+#start-btn:hover {
+    background-color: #5871d5;
+    color: #fbf1df;
+}
+#start-btn:active {
+    background-color: #6685ff;
+    color: #fbf1df;
+}
+#app {
+    height: 100vh;
+    width: 100vw;
+}
+/* счет */
+#field-menu {
+    width: 100%;
+    height: 50px;
+    border: 2px solid darkgray;
+    visibility: hidden;
+    position: absolute;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFBE53;
+}
+#field-menu p, #start-ball {
+    margin-right: 10px;
+}
+
+/* поле */
+#fieldWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+#field {
+    width: 600px;
+    height: 300px;
+    margin: 0 auto;
+    border: 2px solid black;
+    background-color: #FFBE53;
+    align-self: center;
+    position: relative;
+}
+#stickL, #stickR {
+    position: absolute;
+    width: 2%;
+    height: 25%;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: #71B2FE;
+    margin: 0px;
+    padding: 0px;
+};
+#stickL {
+    left: 2%;
+    top: 50%;
+}
+#stickR {
+    right: 0px;
+    top: 50%;
+}
+
+#ball {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: #155263;
+    z-index: 100;
+    bottom: 20px;
+    left: 20px;
+}

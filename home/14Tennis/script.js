@@ -151,8 +151,3 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 document.getElementById('start-btn').addEventListener('click', game);
 window.addEventListener('keydown', renewGame );
-
-
-
-
-

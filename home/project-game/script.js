@@ -27,7 +27,7 @@ let playerName;
 
 const startMenuTrack = new Audio('start-menu-music.mp3');
 startMenuTrack.loop = true;
-let isStartTrackPLayerd;
+let isStartTrackPLayed;
 
 const backgroundTrack = new Audio('bcg-music.mp3')
 backgroundTrack.loop = true;
@@ -413,12 +413,12 @@ const setlisteners = () => {
 
     // музыка
     document.getElementById('click-to-play-music').addEventListener('click', () => {
-        if (!isStartTrackPLayerd)  {
+        if (!isStartTrackPLayed)  {
             startMenuTrack.play();
-            isStartTrackPLayerd = true;
+            isStartTrackPLayed = true;
         } else {
             startMenuTrack.pause();
-            isStartTrackPLayerd = false; 
+            isStartTrackPLayed = false; 
         }
     });
 
@@ -604,6 +604,6 @@ window.addEventListener('load', () => {
     document.getElementById('close-btn').addEventListener('click', () => {
         init();
         startMenuTrack.play();
-        isStartTrackPLayerd = true;
+        isStartTrackPLayed = true;
     });
 });
